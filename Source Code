@@ -1,0 +1,83 @@
+import random
+import tkinter as tk
+
+
+def Rock_Clicked():
+    global PlayerChoice
+    PlayerChoice = "Rock"
+    evaluate_results()
+
+def Scissors_Clicked():
+    global PlayerChoice
+    PlayerChoice = "Scissors"
+    evaluate_results()
+
+def Paper_Clicked():
+    global PlayerChoice
+    PlayerChoice = "Paper"
+    evaluate_results()
+
+def evaluate_results():
+    global PlayerChoice
+    global ComputerRNG
+
+    options = ("Rock", "Paper", "Scissors")
+    ComputerRNG = random.choice(options)
+    value = 0
+
+    if PlayerChoice == "Rock" and ComputerRNG == "Scissors":
+        value = 1
+    elif PlayerChoice == "Scissors" and ComputerRNG == "Paper":
+        value = 2
+    elif PlayerChoice == "Paper" and ComputerRNG == "Rock":
+        value = 3
+    elif PlayerChoice == "Rock" and ComputerRNG == "Paper":
+        value = -1
+    elif PlayerChoice == "Scissors" and ComputerRNG == "Rock":
+        value = -2
+    elif PlayerChoice == "Paper" and ComputerRNG == "Scissors":
+        value = -3
+    elif PlayerChoice == ComputerRNG:
+        value = 0
+
+    if value == 1:
+        result_label.config(text="Rock Beats Scissors, You Win")
+    elif value == 2:
+        result_label.config(text="Scissors Beats Paper, You Win")
+    elif value == 3:
+        result_label.config(text="Paper Beats Rock, You Win")
+    elif value == 0:
+        result_label.config(text="You Both Chose the Same Thing, It's a Draw")
+    elif value == -1:
+        result_label.config(text="Paper Beats Rock, You Lose")
+    elif value == -2:
+        result_label.config(text="Rock Beats Scissors, You Lose")
+    elif value == -3:
+        result_label.config(text="Scissors Beats Paper, You Lose")
+
+window = tk.Tk()
+window.title("Rock Paper Scissors")
+window.geometry("400x300")
+window.configure(bg="cyan")
+PlayerChoice = None
+ComputerRNG = None
+
+label = tk.Label(window, bg="cyan", text="Choose Rock, Paper, or Scissors")
+label.pack()
+
+Rock = tk.Button(window, text="Rock", command=Rock_Clicked)
+Rock.config(width=10, height=2)
+Rock.pack()
+
+Scissors = tk.Button(window, text="Scissors", command=Scissors_Clicked)
+Scissors.config(width=10, height=2)
+Scissors.pack()
+
+Paper = tk.Button(window, text="Paper", command=Paper_Clicked)
+Paper.config(width=10, height=2)
+Paper.pack()
+
+result_label = tk.Label(window, bg="cyan", text="")
+result_label.pack()
+
+window.mainloop()
